@@ -15,7 +15,7 @@ function tryConvert(temperature, converter) {
   if (Number.isNaN(input)) {
     return '';
   }
-  const output = converter(input); //Convert here is a fucntion that takes 'input' as a parameter
+  const output = converter(input); //Converter here is a fucntion that takes 'input' as a parameter
   const rounded = Math.round(output * 1000) / 1000;
   return rounded.toString();
 }
