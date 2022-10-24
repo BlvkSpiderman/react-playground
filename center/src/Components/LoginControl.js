@@ -72,15 +72,15 @@ function LoginButton(props) {
   
       return (
         <div>
-        <div className= "show">
-          <Greeting isLoggedIn={isLoggedIn} name={'Henry'} />
-          {button}
-        </div>
-         <div>
-           <NumberList numbers={randNum}/>
-         </div>
+          <div className= "show">
+            <Greeting isLoggedIn={isLoggedIn} name={'Henry'} />
+            {button}
+          </div>
           <div>
-            <Blog posts={posts}/>
+            <NumberList numbers={randNum}/>
+          </div>
+          <div>
+              <Blog posts={posts}/>
           </div>
        </div>
       );
@@ -92,4 +92,5 @@ function LoginButton(props) {
     {id: 1, title: 'Hello World', content: 'Welcome to learning React!'},
     {id: 2, title: 'Installation', content: 'You can install React from npm.'}
   ];
+  
   export default LoginControl;
