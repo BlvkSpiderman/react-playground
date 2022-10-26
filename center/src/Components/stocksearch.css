@@ -1,0 +1,48 @@
+.filter-table {
+    border: 1px solid orange;
+    display: flex;
+    flex-flow: column wrap;
+    padding: 10px;
+}
+
+/** Search Area*/
+.search-area {
+    border: 1px solid blue;
+    width: 100;
+    padding: 10px;
+    display: flex;
+    flex-flow: column wrap;
+}
+.search-area:nth-child(1) {
+    width: 100%;
+    padding: 5px;
+    margin-bottom: 10px;
+    border: 1px solid black;
+}
+.search-area:nth-child(2) {
+    width: 100%;
+    border: 1px solid black;
+}
+
+/** Product Table*/
+.product-table {
+    border: 1px solid green;
+    display: flex;
+    flex-flow: column wrap;
+}
+.product-category-row {
+    border: 1px solid turquoise;
+    width: 100%;
+    text-align: left;
+    padding: 10px;
+    margin-bottom: 10px;
+    font-size: 25px;
+    display: block;
+}
+.product-row li {
+    border: 1px solid red;
+    padding: 10px;
+    font-size: 18px;
+    text-align: left;
+    display: block;
+}
