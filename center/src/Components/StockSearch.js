@@ -42,7 +42,7 @@ function ProductTable(props) {
 //* Product Category row component
 function ProductCategoryRow(props) {
     return (   
-    <div className="product-category">
+    <div className="product-category-row">
         {props.searchItems.category}
     </div>
     );
@@ -86,7 +86,7 @@ class SearchBar extends React {
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
-    dataBase = this.props.database; // Database for searching through
+    dataBase = this.props.databaseArray; // Database for searching through
 
     handleChange(e) {
        const checker = () => {
@@ -114,10 +114,11 @@ class SearchBar extends React {
         let searchItems = <SearchDatabase 
                         dataBase={this.dataBase}
                         searchKey={searchKey} />
+        this.state.searchItems = searchItems;
 
 
         return(
-            <form onSubmit={this.handleSubmit}>
+            <form onSubmit={this.handleSubmit} className='search-area'>
                 <input
                 value={searchKey}
                 onChange={this.handleChange} 
@@ -134,7 +135,7 @@ class SearchBar extends React {
 
 const App = (
     <FilterableProductTable 
-    search={SearchBar}
+    search={<SearchBar databaseArray={database}/>}
     productTable={
         <ProductTable
         productCategory={ProductCategoryRow}
