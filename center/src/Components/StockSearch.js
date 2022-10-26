@@ -1,6 +1,6 @@
 import React from "react";
 
-//Database for the application
+//*Database for the application
 const database = [
     {category: "Sporting Goods", price: "$49.99", stocked: true, name: "Football"},
     {category: "Sporting Goods", price: "$9.99", stocked: true, name: "Baseball"},
@@ -19,16 +19,50 @@ const database = [
         - ProductRow 
  */
 
-// Filter table housing
+//* Filter table housing
 function FilterableProductTable (props) {
     return (
         <div className="filter-table">
-            {props.children}
+            {props.search}
+            {props.productTable}
         </div>
     );
 }
 
-// Search Component
+//* Product Table
+function ProductTable(props) {
+    return (
+        <div className="product-table">
+            {props.productCategory}
+            {props.productRow}
+        </div>
+    );
+}
+
+//* Product Category row component
+function ProductCategoryRow(props) {
+    return (   
+    <div className="product-category">
+        {props.searchItems.category}
+    </div>
+    );
+}
+
+//* Product row
+function ProductRow(props) {
+    let items = props.searchItem;
+
+    const listItems = items.map((item) =>
+    <li key = {item.toString()}>
+        {item.name}  {item.price}
+    </li>
+  );
+  return (
+    <ul className="product-row-container">{listItems}</ul>
+  );
+}
+
+//* Search Component
 function SearchDatabase(props) {
     const foundItems = [];
     props.dataBase.forEach(element => {
@@ -38,6 +72,7 @@ function SearchDatabase(props) {
     });
     return foundItems;
 }
+
 
 
 class SearchBar extends React {
@@ -70,10 +105,9 @@ class SearchBar extends React {
     }
     
     handleSubmit(e) {
-        return e.preventDefault;
+        e.preventDefault();
     }
  
-    
     render() {
         let searchKey = this.state.searchKey;
         let isChecked = this.state.isChecked;
@@ -98,13 +132,14 @@ class SearchBar extends React {
     }
 }
 
-// Product Table
-function ProductTable(props) {
-    return (
-        <div className="product-table">
-            {props.children}
-        </div>
-    );
-}
+const App = (
+    <FilterableProductTable 
+    search={SearchBar}
+    productTable={
+        <ProductTable
+        productCategory={ProductCategoryRow}
+        productRow={ProductRow}/>
+    }/>
+);
 
-//
+export default App;
