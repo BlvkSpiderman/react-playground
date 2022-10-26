@@ -1,146 +1,106 @@
 import React from "react";
-
-//*Database for the application
-const database = [
-    {category: "Sporting Goods", price: "$49.99", stocked: true, name: "Football"},
-    {category: "Sporting Goods", price: "$9.99", stocked: true, name: "Baseball"},
-    {category: "Sporting Goods", price: "$29.99", stocked: false, name: "Basketball"},
-    {category: "Electronics", price: "$99.99", stocked: true, name: "iPod Touch"},
-    {category: "Electronics", price: "$399.99", stocked: false, name: "iPhone 5"},
-    {category: "Electronics", price: "$199.99", stocked: true, name: "Nexus 7"}
-  ];
-
-/**
- Here is the hierarchy for this component
- - FilterableProductTable
-    - SearchBar
-    - ProductTable 
-        - ProductCategoryRow
-        - ProductRow 
- */
-
-//* Filter table housing
-function FilterableProductTable (props) {
-    return (
-        <div className="filter-table">
-            {props.search}
-            {props.productTable}
-        </div>
-    );
-}
-
-//* Product Table
-function ProductTable(props) {
-    return (
-        <div className="product-table">
-            {props.productCategory}
-            {props.productRow}
-        </div>
-    );
-}
-
-//* Product Category row component
-function ProductCategoryRow(props) {
-    return (   
-    <div className="product-category-row">
-        {props.searchItems.category}
-    </div>
-    );
-}
-
-//* Product row
-function ProductRow(props) {
-    let items = props.searchItem;
-
-    const listItems = items.map((item) =>
-    <li key = {item.toString()}>
-        {item.name}  {item.price}
-    </li>
-  );
-  return (
-    <ul className="product-row-container">{listItems}</ul>
-  );
-}
-
-//* Search Component
-function SearchDatabase(props) {
-    const foundItems = [];
-    props.dataBase.forEach(element => {
-        if(element.name === props.searchKey) {
-            foundItems.push(element);
-        }
-    });
-    return foundItems;
-}
-
-
-
-class SearchBar extends React {
-    constructor(props) {
-        super(props);
-        this.state = {
-            searchKey: '',
-            searchItems: [],
-            isChecked: false
-        } 
-        this.handleChange = this.handleChange.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
-    }
-    dataBase = this.props.databaseArray; // Database for searching through
-
-    handleChange(e) {
-       const checker = () => {
-            if(this.state.isChecked === false) {
-                return false;
-            } else {
-                return true;
-            }
-        }
-        this.setState(
-            {
-                searchItem: e.target.value,
-                isChecked: checker
-            }
-        );
-    }
-    
-    handleSubmit(e) {
-        e.preventDefault();
-    }
- 
+import ReactDOM  from "react";
+class ProductCategoryRow extends React.Component {
     render() {
-        let searchKey = this.state.searchKey;
-        let isChecked = this.state.isChecked;
-        let searchItems = <SearchDatabase 
-                        dataBase={this.dataBase}
-                        searchKey={searchKey} />
-        this.state.searchItems = searchItems;
-
-
-        return(
-            <form onSubmit={this.handleSubmit} className='search-area'>
-                <input
-                value={searchKey}
-                onChange={this.handleChange} 
-                placeholder='Search'/>
-                <input 
-                type="checkbox" 
-                value= 'Only show products in stock' 
-                checked={isChecked}
-                onChange={this.handleChange}/>
-            </form>
-        );
+      const category = this.props.category;
+      return (
+        <tr>
+          <th colSpan="2">
+            {category}
+          </th>
+        </tr>
+      );
     }
-}
-
-const App = (
-    <FilterableProductTable 
-    search={<SearchBar databaseArray={database}/>}
-    productTable={
-        <ProductTable
-        productCategory={ProductCategoryRow}
-        productRow={ProductRow}/>
-    }/>
-);
-
-export default App;
+  }
+  
+  class ProductRow extends React.Component {
+    render() {
+      const product = this.props.product;
+      const name = product.stocked ?
+        product.name :
+        <span style={{color: 'red'}}>
+          {product.name}
+        </span>;
+  
+      return (
+        <tr>
+          <td>{name}</td>
+          <td>{product.price}</td>
+        </tr>
+      );
+    }
+  }
+  
+  class ProductTable extends React.Component {
+    render() {
+      const rows = [];
+      let lastCategory = null;
+      
+      this.props.products.forEach((product) => {
+        if (product.category !== lastCategory) {
+          rows.push(
+            <ProductCategoryRow
+              category={product.category}
+              key={product.category} />
+          );
+        }
+        rows.push(
+          <ProductRow
+            product={product}
+            key={product.name} />
+        );
+        lastCategory = product.category;
+      });
+  
+      return (
+        <table>
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Price</th>
+            </tr>
+          </thead>
+          <tbody>{rows}</tbody>
+        </table>
+      );
+    }
+  }
+  
+  class SearchBar extends React.Component {
+    render() {
+      return (
+        <form>
+          <input type="text" placeholder="Search..." />
+          <p>
+            <input type="checkbox" />
+            {' '}
+            Only show products in stock
+          </p>
+        </form>
+      );
+    }
+  }
+  
+  class FilterableProductTable extends React.Component {
+    render() {
+      return (
+        <div>
+          <SearchBar />
+          <ProductTable products={this.props.products} />
+        </div>
+      );
+    }
+  }
+  
+  
+  const PRODUCTS = [
+    {category: 'Sporting Goods', price: '$49.99', stocked: true, name: 'Football'},
+    {category: 'Sporting Goods', price: '$9.99', stocked: true, name: 'Baseball'},
+    {category: 'Sporting Goods', price: '$29.99', stocked: false, name: 'Basketball'},
+    {category: 'Electronics', price: '$99.99', stocked: true, name: 'iPod Touch'},
+    {category: 'Electronics', price: '$399.99', stocked: false, name: 'iPhone 5'},
+    {category: 'Electronics', price: '$199.99', stocked: true, name: 'Nexus 7'}
+  ];
+   
+  const root = ReactDOM.createRoot(document.getElementById('container'));
+  root.render(<FilterableProductTable products={PRODUCTS} />);
