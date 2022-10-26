@@ -81,3 +81,15 @@ class SignUpDialog extends React.Component {
       alert(`Welcome aboard, ${this.state.login}!`);
     }
   }
+
+
+  // Just something to take care of the unused components
+  const use = (
+    <div>
+        <WelcomeDialog />
+        <SignUpDialog />
+        <WelcomeDialogBox />
+    </div>
+  );
+
+  export default use; 
