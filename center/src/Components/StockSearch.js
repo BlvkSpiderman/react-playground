@@ -166,6 +166,6 @@ const PRODUCTS = [
   {category: 'Electronics', price: '$199.99', stocked: true, name: 'Nexus 7'}
 ];
 
-const FilterApp = () => {<FilterableProductTable products={PRODUCTS} />};
+const FilterApp = () => <FilterableProductTable products={PRODUCTS} />;
 
 export default FilterApp;
