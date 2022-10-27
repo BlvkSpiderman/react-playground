@@ -1,4 +1,5 @@
 import React from "react";
+import './components.css';
 class ProductCategoryRow extends React.Component {
   render() {
     const category = this.props.category;
@@ -139,7 +140,7 @@ class FilterableProductTable extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className="filter-container">
         <SearchBar
           filterText={this.state.filterText}
           inStockOnly={this.state.inStockOnly}

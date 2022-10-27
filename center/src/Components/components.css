@@ -31,6 +31,15 @@ button {
   flex-flow: column wrap;
 }  
 
+.cont-secondary {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 10px;
+  justify-items: center;
+  align-items: center;
+}
+
+/** Temperature Component*/
 .temp-section{
   border: 1px solid black;
   display: flex;
@@ -38,4 +47,9 @@ button {
   justify-content: space-between;
   align-items: center;
   padding: 20px;
+}
+
+/** Filter app component*/
+.filter-container {
+  border: 1px solid black;
 }

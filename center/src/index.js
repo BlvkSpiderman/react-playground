@@ -12,12 +12,14 @@ import FilterApp from './Components/StockSearch';
 const root = ReactDOM.createRoot(document.getElementById('root')); 
 root.render(
     <div className='main'>
-        <LoginControl />
-       <div className='temp-container'>
-        <Calculator />
-        </div>
-        <div className="filter-container">
-            <FilterApp />
+            <LoginControl />
+        <div className="cont-secondary">
+            <div className='temp-container'>
+                <Calculator />
+            </div>
+            <div className="filter-app-container">
+                <FilterApp />
+            </div>
         </div>
     </div>
 );
