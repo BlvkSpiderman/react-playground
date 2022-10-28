@@ -1,4 +1,4 @@
-export const Database = () => ([
+export const EmployeeDatabase = () => ([
     {
         id: 1,
         fullName: "Bob Jones",
