@@ -1,4 +1,5 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
+import React from 'react';
 
 const Footer = () => {
     var today = new Date();
