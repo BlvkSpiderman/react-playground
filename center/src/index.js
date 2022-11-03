@@ -7,11 +7,12 @@ import reportWebVitals from './reportWebVitals';
 import Calculator from './Components/TempCalculator';
 import LoginControl from './Components/LoginControl';
 import FilterApp from './Components/StockSearch';
+import { FetchData } from './Components/DataFetch';
 
 
 const root = ReactDOM.createRoot(document.getElementById('root')); 
 root.render(
-    <div className='main'>
+    <main className='main'>
             <LoginControl />
         <div className="cont-secondary">
             <div className='temp-container'>
@@ -21,7 +22,10 @@ root.render(
                 <FilterApp />
             </div>
         </div>
-    </div>
+        <div className="tertiary">
+            <FetchData />
+        </div>
+    </main>
 );
 
 reportWebVitals();
