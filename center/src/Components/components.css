@@ -53,3 +53,22 @@ button {
 .filter-container {
   border: 1px solid black;
 }
+
+/** Post area*/
+.post-area {
+  display: flex;
+  flex-flow: column wrap;
+  justify-content: center;
+  align-items: center;
+}
+.buttons-post {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-around;
+  align-items: center;
+  width: 100%;
+}
+.buttons-post button {
+  background-color: white;
+  padding: 10px;
+}
