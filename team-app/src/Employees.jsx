@@ -21,7 +21,8 @@ const Employees = (props) => {
                     <div className="card-collection">
                         {
                             props.employees.map((employee) => (
-                                <div id={employee.id} key={employee.id.toString()} className={(employee.teamName === props.selectedTeam? 'card m-2 standout': 'card m-2')} style={{cursor: 'pointer'}} onClick={props.handleEmployeeCardClick} >                            
+                                <div id={employee.id} key={employee.id.toString()} className={(employee.teamName === props.selectedTeam? 'card m-2 standout': 'card m-2')} 
+                                style={{cursor: 'pointer'}} onClick={props.handleEmployeeCardClick} >                            
                                 {(employee.gender === 'male') ? <img src={maleProfile} alt='male profile pic' className="card-ing-top" />
                                                             :<img src={femaleProfile} alt='female profile pic' className="card-ing-top" />}                            
                                 <div className="card-body"> 
