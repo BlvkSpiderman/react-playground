@@ -9,6 +9,7 @@ export const AutoComplete = () => {
 
     const renderDropdown = () => {
         const dropDownClass = search ? 'show' : null;
+        
         return (
             <ul style={{
                 height:'400px', 
@@ -55,6 +56,7 @@ export const AutoComplete = () => {
             setResults([]); //This clears the results state when search is empty
         }
     }, [search]);
+
     return (
         <div className="w-50 p-5 rounded mx-auto">
             <div className="form-floating dropdown">
@@ -62,11 +64,6 @@ export const AutoComplete = () => {
                 className="form-control" placeholder="Search" autoComplete="off" value={search}
                 onChange={(e) => setSearch(e.target.value)} />
                 <label htmlFor="search">Search</label>
-                <ul className="dropdown-menu">
-                    <li>Stock1</li>
-                    <li>Stock2</li>
-                    <li>Stock3</li>
-                </ul>
                 {renderDropdown()}
             </div>
         </div>
