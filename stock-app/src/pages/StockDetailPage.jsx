@@ -2,13 +2,14 @@ import { useParams } from "react-router-dom";
 import { useEffect } from "react";
 import finnHub from "../apis/finnHub";
 import { useState } from "react";
+import { StockChart } from "../components/StockChart";
 
 const formatData = (data) => {
     //The 't' is specifying the property in the data object
     return data.t.map((el, index) => {
         return {
             x: el * 1000,
-            y: data.c[index]
+            y: Math.floor(data.c[index])
         }
     })
 }
@@ -61,7 +62,6 @@ export const StockDetailPage = () => {
                         }
                     })
             ])
-            console.log(responses);
             setChartData({
                     day: formatData(responses[0].data),
                     week: formatData(responses[1].data),
@@ -76,6 +76,14 @@ export const StockDetailPage = () => {
     }, [symbol])
     
     return (
-        <p>{symbol} Detail page</p>
+        <div>
+            {chartData && (
+                <div>
+                    <StockChart 
+                    chartData={chartData}
+                    symbol={symbol}/>
+                </div>
+            )}
+        </div>
     )
 }
