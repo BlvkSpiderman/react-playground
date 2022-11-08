@@ -3,6 +3,7 @@ import { useEffect } from "react";
 import finnHub from "../apis/finnHub";
 import { useState } from "react";
 import { StockChart } from "../components/StockChart";
+import { StockData } from "../components/StockData";
 
 const formatData = (data) => {
     //The 't' is specifying the property in the data object
@@ -82,6 +83,7 @@ export const StockDetailPage = () => {
                     <StockChart 
                     chartData={chartData}
                     symbol={symbol}/>
+                    <StockData symbol={symbol} />
                 </div>
             )}
         </div>
