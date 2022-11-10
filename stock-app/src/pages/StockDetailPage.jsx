@@ -18,11 +18,15 @@ const formatData = (data) => {
 export const StockDetailPage = () => {
     const { symbol } = useParams();
     const [ chartData, setChartData] = useState([]);
+    const [ display, setDisplay ] = useState(false);
+    const [ showData, setShowData ] = useState(false); 
 
     useEffect(() => {
         const fetchData = async () => {
             const date = new Date();
-            const currentTime = Math.floor(date.getTime()/1000); //It gets the current time in milliseconds and then converts to seconds by division
+            
+            //It gets the current time in milliseconds and then converts to seconds by division of 1000
+            const currentTime = Math.floor(date.getTime()/1000);
             
             // Time from one day ago.
             let oneDay;   
@@ -33,9 +37,10 @@ export const StockDetailPage = () => {
             } else {
                 oneDay = currentTime - 24*60*60;
             }
-
             const oneWeek = currentTime - 7*24*60*60; // Time from one week ago
             const oneYear = currentTime - 365*24*60*60; // Time from one year ago
+
+            // Fetching the data for the different time periods
             try {    
                  const responses = await Promise.all([
                     finnHub.get('/stock/candle', {
@@ -63,6 +68,7 @@ export const StockDetailPage = () => {
                         }
                     })
             ])
+            // Setting the chart data
             setChartData({
                     day: formatData(responses[0].data),
                     week: formatData(responses[1].data),
@@ -75,17 +81,28 @@ export const StockDetailPage = () => {
         }
         fetchData();
     }, [symbol])
+
+    useEffect(() => {
+        if(chartData) {
+            setTimeout(() => setDisplay(true), 1);    
+        }
+    }, [chartData]);
+
+    useEffect(() => {
+        setTimeout(() => setShowData(true), 1000);
+    }, [])
     
-    return (
+
+    return display ? (
         <div>
-            {chartData && (
-                <div>
-                    <StockChart 
-                    chartData={chartData}
-                    symbol={symbol}/>
-                    <StockData symbol={symbol} />
-                </div>
-            )}
+            <div>
+                <StockChart 
+                chartData={chartData}
+                symbol={symbol}/>
+                {showData && <StockData symbol={symbol}/>}
+            </div>
         </div>
-    )
+    ) : (
+        <div></div>
+    );
 }
