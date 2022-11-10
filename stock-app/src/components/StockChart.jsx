@@ -1,6 +1,7 @@
 import Chart from "react-apexcharts";
 import { useState } from "react";
 
+
 export const StockChart = ({ chartData, symbol }) => {
   const [dateFormat, setDateFormat] = useState("24h");
   const { day, week, year } = chartData;
@@ -19,7 +20,8 @@ export const StockChart = ({ chartData, symbol }) => {
   }
 
   const receivedData = determineTimeFormat(); // The time format is assigned to check 
-  const color = receivedData && receivedData[ receivedData.length - 1].y - receivedData[0].y > 0 // check is defined before checking the lenght   
+  // receivedData is defined before checking the lenght   
+  const color = receivedData && receivedData[ receivedData.length - 1].y - receivedData[0].y > 0 
              ? "#26C281" : "#ed3419";                                
 
 
@@ -69,11 +71,10 @@ export const StockChart = ({ chartData, symbol }) => {
     }
   }
 
- //if(!receivedData) return <h1>Loading...</h1>; // this is a conditional renderer
 
   return (
     receivedData && <div className='mt-5 p-4 shadow-sm bg-white'>
-       <Chart options={options} series={series} type='area' width='100%' /><div>
+       <Chart options={options} series={series} type='area' width='100%'/><div>
               <button className={renderButtonSelect('24h')} onClick={() => setDateFormat('24h')}>24h</button>
               <button className={renderButtonSelect('7d')} onClick={() => setDateFormat('7d')}>7d</button>
               <button className={renderButtonSelect('1y')} onClick={() => setDateFormat('1y')}>1y</button>
