@@ -9,7 +9,7 @@ export const EmployeeContextProvider = (props) => {
     const [selectedTeam, setTeam] = useState('null');
     const [employees, setEmployees] = useState(EmployeeDatabase);    
     const [teamMemberCount, setMemberCount] = useState(0);
-    const [selectedMember, setSelectedMember] = useState({});
+    const [selectedMember, setSelectedMember] = useState(JSON.parse(localStorage.getItem('selectedMember'))||{});
     const [groupedEmployees, setGroupedData] = useState(groupedTeamMembers());
 
     function handleTeamSelectionChange(event) {
@@ -37,6 +37,10 @@ export const EmployeeContextProvider = (props) => {
         localStorage.setItem('selectedTeam', JSON.stringify(selectedTeam));
     }, [selectedTeam]);
 
+    useEffect(() => {
+        localStorage.setItem('selectedMember', JSON.stringify(selectedMember));     
+    }, [selectedMember]);
+
     function groupedTeamMembers() {
         const teams = ['TeamA', 'TeamB', 'TeamC', 'TeamD']; 
         var teamData = [];
@@ -48,11 +52,7 @@ export const EmployeeContextProvider = (props) => {
         }
         return teamData;
     }
-    /**
-     * var teamMembers = employees.filter((employee) => employee.teamName === x);
-     * var data  = {team: 'TeamC', members: teamMembers, collapsed: selectedTeam === x ? false : true}
-        x = data;
-    */
+    
 
     return <EmployeeContext.Provider value={{employees,
                                             setEmployees,
