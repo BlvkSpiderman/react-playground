@@ -4,6 +4,7 @@ import { useEmployeeContext } from '../context/EmployeeContext';
 
 const Header = () => {
     const { selectedTeam, teamMemberCount } = useEmployeeContext();
+    
     return (    
         <header className="container">
             <div className="row justify-content-center mt-3 mb-4">
