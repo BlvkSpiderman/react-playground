@@ -1,8 +1,9 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { useEffect } from 'react';
 import { useEmployeeContext } from '../context/EmployeeContext';
 
 export const GroupedTeamMembers = () => {
-    const { groupedEmployees, setGroupedData, setTeam } = useEmployeeContext();
+    const { groupedEmployees, setGroupedData } = useEmployeeContext();
 
     function handleTeamClick(event) {
         var newGroupedData = groupedEmployees.map((groupedData) => groupedData.team === event.currentTarget.id 
@@ -16,11 +17,23 @@ export const GroupedTeamMembers = () => {
              */
         
         setGroupedData(newGroupedData);
-        setTeam(event.currentTarget.id);
     }
 
-    return (
-         <main>
+    useEffect(() => {
+        document.title = 'Teams'; 
+    }, []);
+
+    return (<>
+     <header className="container">
+            <div className="row justify-content-center mt-3 mb-4">
+                <div className="col-8">
+                    <h1 style={{fontSize: '45px'}}>
+                        Group Teams
+                    </h1>
+                </div>
+            </div>
+        </header>
+         <main style={{width: '50vw', margin: '0 auto', marginBottom: '80px'}}>
             {groupedEmployees.map((item) => {
                 return (
                     <div key={item.team} className="card mt-2" style={{ cursor: "pointer" }}>
@@ -48,5 +61,7 @@ export const GroupedTeamMembers = () => {
             })
         }
         </main>
+    </>
+        
     )
 }
