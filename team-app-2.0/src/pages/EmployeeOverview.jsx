@@ -2,9 +2,10 @@ import { useEmployeeContext } from "../context/EmployeeContext";
 import maleProfile from '../images/maleProfile.jpg';
 import femaleProfile from '../images/femaleProfile.jpg';
 import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 
 export const EmployeeOverview = () => {
-    const { employees, selectedTeam, handleTeamSelectionChange, setSelectedMember, selectedMember } = useEmployeeContext();
+    const { employees, selectedTeam, handleTeamSelectionChange, setSelectedMember, setDisplayHeader} = useEmployeeContext();
     const navigate = useNavigate();
 
     /*
@@ -33,10 +34,14 @@ export const EmployeeOverview = () => {
     }
     */
     
-    function HandleEmployeeCardClick(id) { 
+    useEffect(() => {
+        document.title = 'Home';
+    }, [])
+    
+    function HandleEmployeeCardClick(id, profileTitle) { 
         const teamMember =  employees.filter((employee) => employee.id === id);
         setSelectedMember(teamMember[0]);
-        navigate(`profile/${selectedMember.fullName}`);
+        navigate(`profile/${profileTitle}`);
     }
 
     return (
@@ -56,7 +61,7 @@ export const EmployeeOverview = () => {
                         {
                             employees.map((employee) => (
                                 <div id={employee.id} key={employee.id.toString()} className={(employee.teamName === selectedTeam? 'card m-2 standout': 'card m-2')} 
-                                style={{cursor: 'pointer'}} onClick={() => HandleEmployeeCardClick(employee.id)} >                            
+                                style={{cursor: 'pointer'}} onClick={() => HandleEmployeeCardClick(employee.id, employee.fullName)} >                            
                                 {(employee.gender === 'male') ? <img src={maleProfile} alt='male profile pic' className="card-ing-top" />
                                                             :<img src={femaleProfile} alt='female profile pic' className="card-ing-top" />}                            
                                 <div className="card-body"> 
