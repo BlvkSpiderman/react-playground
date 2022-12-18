@@ -2,6 +2,7 @@ import localforage from "localforage";
 import { matchSorter } from "match-sorter";
 import sortBy from "sort-by";
 
+
 export async function getContacts(query) {
   await fakeNetwork(`getContacts:${query}`);
   let contacts = await localforage.getItem("contacts");
@@ -12,6 +13,7 @@ export async function getContacts(query) {
   return contacts.sort(sortBy("last", "createdAt"));
 }
 
+/** Create */
 export async function createContact() {
   await fakeNetwork();
   let id = Math.random().toString(36).substring(2, 9);
@@ -22,6 +24,7 @@ export async function createContact() {
   return contact;
 }
 
+/** Fetch */
 export async function getContact(id) {
   await fakeNetwork(`contact:${id}`);
   let contacts = await localforage.getItem("contacts");
@@ -29,6 +32,7 @@ export async function getContact(id) {
   return contact ?? null;
 }
 
+/** Update */
 export async function updateContact(id, updates) {
   await fakeNetwork();
   let contacts = await localforage.getItem("contacts");
@@ -39,6 +43,7 @@ export async function updateContact(id, updates) {
   return contact;
 }
 
+/** Delete */
 export async function deleteContact(id) {
   let contacts = await localforage.getItem("contacts");
   let index = contacts.findIndex(contact => contact.id === id);
@@ -54,6 +59,7 @@ function set(contacts) {
   return localforage.setItem("contacts", contacts);
 }
 
+/** Fack Cache Network Function */
 // fake a cache so we don't slow down stuff we've already seen
 let fakeCache = {};
 
