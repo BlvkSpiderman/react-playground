@@ -1,22 +1,37 @@
-import { Form } from "react-router-dom";
+import { Form, useLoaderData, useFetcher } from "react-router-dom";
+import { getContact, updateContact } from "../contact";
 
+export async function loader({params}) {
+  const contact = getContact(params.contactId);
+  
+  if (!contact) {
+    throw new Response("", {
+      status: 404,
+      statusText: "Not Found",
+    });
+  }
+
+  return contact;
+}
+
+export async function action({ request, params }) {
+  let formData = await request.formData();
+  return updateContact(params.contactId, {
+    favorite: formData.get("favorite") === "true",
+  });
+}
+
+/** Main */
 export default function Contact() {
-  const contact = {
-    first: "Your",
-    last: "Name",
-    avatar: "https://placekitten.com/g/200/200",
-    twitter: "your_handle",
-    notes: "Blah blah blah",
-    favorite: true,
-  };
-
+  const contact = useLoaderData();
+  
   return (
     <div id="contact">
       <div>
         <img
           key={contact.avatar}
           src={contact.avatar || null}
-          alt='Avatar'
+          alt= ''
         />
       </div>
 
@@ -29,6 +44,8 @@ export default function Contact() {
           ) : (
             <i>No Name</i>
           )} {" "}
+
+          {/* Favorite Btn */}
           <Favorite contact={contact} />
         </h1>
 
@@ -46,9 +63,12 @@ export default function Contact() {
         {contact.notes && <p>{contact.notes}</p>}
 
         <div>
+          {/* Edit Btn */}
           <Form action="edit">
             <button type="submit">Edit</button>
           </Form>
+
+          {/* Delete Btn */}
           <Form
             method="post"
             action="destroy"
@@ -74,9 +94,14 @@ export default function Contact() {
 function Favorite({ contact }) {
   // yes, this is a `let` for later
   let favorite = contact.favorite;
+  const fetcher = useFetcher();
   
+  if (fetcher.formData) {
+    favorite = fetcher.formData.get("favorite") === "true";
+  }
+
   return (
-    <Form method="post">
+    <fetcher.Form method="post">
       <button
         name="favorite"
         value={favorite ? "false" : "true"}
@@ -88,6 +113,6 @@ function Favorite({ contact }) {
       >
         {favorite ? "★" : "☆"}
       </button>
-    </Form>
+    </fetcher.Form>
   );
 }
